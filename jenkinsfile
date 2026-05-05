@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE = "schak04/digital-clock"
+        EC2_IP = "3.239.43.103"
+    }
+
+    stages {
+
+        stage('Clone Repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/schak04/digital-clock-reactjs'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t $IMAGE .'
+            }
+        }
+
+        stage('Docker Login & Push') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
+                )]) {
+                    sh '''
+                    echo $PASS | docker login -u $USER --password-stdin
+                    docker push $IMAGE
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(['ec2-ssh']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@$EC2_IP "
+                    docker pull $IMAGE &&
+                    docker stop app || true &&
+                    docker rm app || true &&
+                    docker run -d -p 80:80 --name app $IMAGE
+                    "
+                    '''
+                }
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                sh 'curl http://$EC2_IP'
+            }
+        }
+    }
+}
