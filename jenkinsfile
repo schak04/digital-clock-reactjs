@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE = "schak04/digital-clock"
+        IMAGE = "schak04/digital-clock:latest"
         EC2_IP = "3.239.43.103"
     }
 
