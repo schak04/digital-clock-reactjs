@@ -5,6 +5,16 @@
 
 ---
 
+## Tech Stack
+
+- **Main Project:** React.js
+- **CI/CD:** Jenkins
+- **Containerization:** Docker
+- **Deployment:** AWS EC2
+- **Web Server:** Nginx
+
+---
+
 ## CI/CD Pipeline with Jenkins, Docker, and AWS EC2
 
 This project sets up a complete CI/CD pipeline that automates the process of building, containerizing, and deploying a React application.
@@ -18,16 +28,6 @@ The goal of this pipeline is to:
 - Push the image to Docker Hub
 - Deploy the container to an AWS EC2 instance
 - Perform a health check on the deployed service
-
----
-
-## Tech Stack
-
-- **Main Project:** React.js
-- **CI/CD:** Jenkins
-- **Containerization:** Docker
-- **Deployment:** AWS EC2
-- **Web Server:** Nginx
 
 ---
 
@@ -111,7 +111,7 @@ This allows Jenkins to execute Docker commands during the pipeline.
 
 ## Deployment URL
 
-`http://3.239.43.103`
+[http://3.239.43.103](https://schak04.github.io/digital-clock-reactjs)
 
 ---
 
@@ -119,7 +119,7 @@ This allows Jenkins to execute Docker commands during the pipeline.
 - Pipeline stages implemented
 - Docker build and push configured
 - EC2 deployment script written
-- Encountered Docker socket permission issues while running Jenkins inside a container (currently debugging)
+<!-- - Encountered Docker socket permission issues while running Jenkins inside a container (currently debugging) -->
 
 ---
 
